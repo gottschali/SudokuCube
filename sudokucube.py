@@ -75,19 +75,12 @@ class SudokuCube(dict):
 
     def solve(self):
         # Solve from all possible starting points
-        self._max_depth = 0
         for coord in (Coordinate(x, y, z) for x, y, z in ((0, 0, 0), (0, 0, 1), (0, 1, 1), (1, 1, 1))):
             if self._solve(coord, 0):
                 human_step_by_step(self)
-                print(self)
                 return True
 
-    def _solve(self, coordinate, depth, verbose=True):
-        if verbose:
-            if depth > self._max_depth:
-                self._max_depth = depth
-                print(f"Depth: {self._max_depth}")
-                print(self)
+    def _solve(self, coordinate, depth):
         # Update the temporary solution
         self[coordinate] = index, color = self._sequence.push()
         # Condition for termination
