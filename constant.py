@@ -30,3 +30,4 @@ COLOR_MAP = {CYAN : "cyan",
              RED : "red",
              BROWN : "brown",
              GREY : "grey"}
+
