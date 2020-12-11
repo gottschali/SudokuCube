@@ -1,16 +1,7 @@
 from collections import namedtuple
 from typing import Iterable
 
-# Define constants for the colors of the dice
-CYAN = 1
-GREEN = 2
-YELLOW = 3
-PINK = 4
-BLUE = 5
-BLACK = 6
-RED = 7
-BROWN = 8
-GREY = 9
+from constant import *
 
 # To look up the names back. Numbers are used in the first place to optimize memory
 color_map = {CYAN : "cyan",
@@ -22,12 +13,6 @@ color_map = {CYAN : "cyan",
              RED : "red",
              BROWN : "brown",
              GREY : "grey"}
-
-ORIGINAL_COLORS = tuple(Dice(i, color) for i, color in enumerate([
-        CYAN, GREEN, YELLOW, PINK, BLUE, BLACK, RED, GREEN, CYAN, BLUE, BLACK,
-        BROWN, GREY, YELLOW, RED, CYAN, BLUE, BROWN, BLACK, RED, GREY, BROWN,
-        PINK, GREEN, YELLOW, GREY, PINK
-    ]))
 
 Dice = namedtuple("Dice", ["index", "color"])
 
