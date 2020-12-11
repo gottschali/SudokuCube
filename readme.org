@@ -1,0 +1,14 @@
+* Observations
+** Direction in which you do doesnt matter
+** There are 4 possible starting points
+* Analyse with colorings
+** Which can be
+*** Center cornern corner
+*** Edge Edge Edge
+*** Corner Center Center
+* Optimisation 
+** Bipartite check
+* How many solutions are there?
+
+* How to construct a sequence for which a unquie solution exists
+** How many are there
