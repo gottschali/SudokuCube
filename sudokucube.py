@@ -1,5 +1,5 @@
 import itertools as it
-from sequence import Sequence
+from sequence import Sequence, color_map
 
 class Coordinate:
 
@@ -131,7 +131,7 @@ def mapping_to_sequence(sudoku_map):
         if coord_a.z < coord_b.z:
             return "down"
     for i in range(len(hm) - 1):
-        print(f"{direction(hm[i][0], hm[i + 1][0])}, {hm[i + 1][1].color}")
+        print(f"{direction(hm[i][0], hm[i + 1][0])}, {color_map[hm[i + 1][1].color]}")
 
 if __name__ == "__main__":
     s = SudokuCube()
