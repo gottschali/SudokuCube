@@ -39,36 +39,47 @@ class Coordinate:
 
 
 class Faces(dict):
+    """
+    For every of the six faces of a cube a set is kept with all colors that are part of the site.
+    add_dice: Add new dices with
+    remove_dice: To remove a dice
+    test_color_constraint: Test if a the constraint is violated
+    """
+
     coordinate_options = tuple(Coordinate(x, y, z) for x, y, z in it.product(range(-1, 2), range(-1, 2), range(-1, 2)))
 
     def __init__(self):
         self.x = dict(((-1, set()), (1, set())))
         self.y = dict(((-1, set()), (1, set())))
         self.z = dict(((-1, set()), (1, set())))
-
         self._generate_faces()
 
-    def _get_faces(self, coordinate):
+    def __get_faces(self, coordinate : Coordinate):
         for axis, coord in zip((self.x, self.y, self.z), coordinate.coords):
             for i in (-1, 1):
                 if coord == i:
                     yield (axis, i)
 
     def _generate_faces(self):
-        self._faces = {}
+        """ initialize self such that self[Coordinate] -> Tuple[[self.x, self.y, self.z], [-1, 1]] """
         for coord in self.coordinate_options:
-            self._faces[coord] = tuple(self._get_faces(coord))
+            self[coord] = tuple(self.__get_faces(coord))
 
+    def test_color_constraint(self, coordinate : Coordinate, color) -> bool:
+        """
+        Tests if a dice of color at coordinate would violate the constraint that
+        on every face of the cube all colors must be distinct
+        """
+        return not any(color in axis[i] for axis, i in self[coordinate])
 
-    def test_color_constraint(self, coordinate, color):
-        return not any(color in axis[i] for axis, i in self._faces[coordinate])
-
-    def add_to_faces(self, coordinate, color):
-        for axis, i in self._faces[coordinate]:
+    def add_dice(self, coordinate : Coordinate, color):
+        """ Adds the color to every face coordinate is a part of """
+        for axis, i in self[coordinate]:
             axis[i].add(color)
 
-    def remove_from_faces(self, coordinate, color):
-        for axis, i in self._faces[coordinate]:
+    def remove_dice(self, coordinate : Coordinate, color):
+        """ Removes the color from every face coordinate is a part of """
+        for axis, i in self[coordinate]:
             axis[i].remove(color)
 
 
@@ -91,7 +102,7 @@ class SudokuCube(dict):
         # Update the temporary solution
         self[coordinate] = index, color = self._sequence.push()
         if self._faces.test_color_constraint(coordinate, color):
-            self._faces.add_to_faces(coordinate, color)
+            self._faces.add_dice(coordinate, color)
             # Recursively solve for every neighbor
             for neighbor in coordinate.neighbors():
                 # Test that the neigbor is not already occupied
@@ -100,7 +111,7 @@ class SudokuCube(dict):
                         # Propagate a solution
                         return True
             # Remove the colors from the faces
-            self._faces.remove_from_faces(coordinate, color)
+            self._faces.remove_dice(coordinate, color)
         # Condition for termination
         if self._sequence.done():
             # Backtrack
