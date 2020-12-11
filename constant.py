@@ -1,3 +1,8 @@
+from collections import namedtuple
+
+# Datastructure for holding the cubes of the SudokuCube
+Dice = namedtuple("Dice", ["index", "color"])
+
 # Define constants for the colors of the dice
 CYAN = 1
 GREEN = 2
@@ -14,3 +19,14 @@ ORIGINAL_COLORS = tuple(Dice(i, color) for i, color in enumerate([
         BROWN, GREY, YELLOW, RED, CYAN, BLUE, BROWN, BLACK, RED, GREY, BROWN,
         PINK, GREEN, YELLOW, GREY, PINK
     ]))
+
+# To look up the names back. Numbers are used in the first place to optimize memory
+COLOR_MAP = {CYAN : "cyan",
+             GREEN : "green",
+             YELLOW : "yellow",
+             PINK : "pink",
+             BLUE : "blue",
+             BLACK : "black",
+             RED : "red",
+             BROWN : "brown",
+             GREY : "grey"}

@@ -1,25 +1,12 @@
-from collections import namedtuple
 from typing import Iterable
 
 from constant import *
 
-# To look up the names back. Numbers are used in the first place to optimize memory
-color_map = {CYAN : "cyan",
-             GREEN : "green",
-             YELLOW : "yellow",
-             PINK : "pink",
-             BLUE : "blue",
-             BLACK : "black",
-             RED : "red",
-             BROWN : "brown",
-             GREY : "grey"}
-
-Dice = namedtuple("Dice", ["index", "color"])
 
 class Sequence(list):
     """ Represents a SudokuCube sequence """
 
-    def __init__(self, color_sequence : iterable[dice] = ORIGINAL_COLORS):
+    def __init__(self, color_sequence : Iterable[Dice] = ORIGINAL_COLORS):
         """ Accepts an optional color_sequence """
         self._index = -1
         self.extend(color_sequence)

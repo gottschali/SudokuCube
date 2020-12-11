@@ -1,5 +1,6 @@
 import itertools as it
-from sequence import Sequence, color_map
+from sequence import Sequence
+from helper import human_step_by_step
 
 class Coordinate:
 
@@ -68,11 +69,6 @@ class Faces(dict):
 
 class SudokuCube(dict):
 
-    starting_points = {"middle": Coordinate(0, 0, 0),
-                       "center": Coordinate(0, 0, 1),
-                       "edge": Coordinate(0, 1, 1),
-                       "corner": Coordinate(1, 1, 1)}
-
     def __init__(self):
         self._sequence = Sequence()
         self._faces = Faces()
@@ -80,9 +76,9 @@ class SudokuCube(dict):
     def solve(self):
         # Solve from all possible starting points
         self._max_depth = 0
-        for coord in SudokuCube.starting_points.values():
+        for coord in (Coordinate(x, y, z) for x, y, z in ((0, 0, 0), (0, 0, 1), (0, 1, 1), (1, 1, 1))):
             if self._solve(coord, 0):
-                mapping_to_sequence(self)
+                human_step_by_step(self)
                 print(self)
                 return True
 
@@ -112,26 +108,6 @@ class SudokuCube(dict):
         self._sequence.pop()
         del self[coordinate]
 
-def mapping_to_sequence(sudoku_map):
-    hm = sorted(sudoku_map.items(), key=lambda i: i[1].index)
-    start = hm[0][0]
-    reverse = {v: k for k, v in SudokuCube.starting_points.items()}
-    print(f"starting point: {reverse[start]}")
-    def direction(coord_a, coord_b):
-        if coord_a.x > coord_b.x:
-            return "left"
-        if coord_a.x < coord_b.x:
-            return "right"
-        if coord_a.y > coord_b.y:
-            return "front"
-        if coord_a.y < coord_b.y:
-            return "back"
-        if coord_a.z > coord_b.z:
-            return "up"
-        if coord_a.z < coord_b.z:
-            return "down"
-    for i in range(len(hm) - 1):
-        print(f"{direction(hm[i][0], hm[i + 1][0])}, {color_map[hm[i + 1][1].color]}")
 
 if __name__ == "__main__":
     s = SudokuCube()
