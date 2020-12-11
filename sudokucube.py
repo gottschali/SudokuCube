@@ -75,17 +75,16 @@ class SudokuCube(dict):
 
     def solve(self):
         # Solve from all possible starting points
+        solutions = 0
         for coord in (Coordinate(x, y, z) for x, y, z in ((0, 0, 0), (0, 0, 1), (0, 1, 1), (1, 1, 1))):
             if self._solve(coord, 0):
                 human_step_by_step(self)
-                return True
+                solutions += 1
+        print(f"Found {solutions} solutions")
 
     def _solve(self, coordinate, depth):
         # Update the temporary solution
         self[coordinate] = index, color = self._sequence.push()
-        # Condition for termination
-        if self._sequence.done():
-            return True
         if self._faces.test_color_constraint(coordinate, color):
             self._faces.add_to_faces(coordinate, color)
             # Recursively solve for every neighbor
@@ -97,6 +96,12 @@ class SudokuCube(dict):
                         return True
             # Remove the colors from the faces
             self._faces.remove_from_faces(coordinate, color)
+        # Condition for termination
+        if self._sequence.done():
+            # Backtrack
+            self._sequence.pop()
+            del self[coordinate]
+            return True
         # Backtrack
         self._sequence.pop()
         del self[coordinate]
