@@ -6,11 +6,6 @@ import {steps} from './steps.js'
 // Orbit Controls
 // Automatic resizing
 
-// ------------------------------------------------
-// BASIC SETUP
-// ------------------------------------------------
-
-
 // Create an empty scene
 const scene = new THREE.Scene();
 
@@ -31,18 +26,8 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 // Append Renderer to DOM
 document.body.appendChild( renderer.domElement );
 
-// ------------------------------------------------
-// FUN STARTS HERE
-// ------------------------------------------------
 
 const diceGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-
-const material = new THREE.MeshBasicMaterial( { color: "#433F81" } );
-const dice01 = new THREE.Mesh( diceGeometry, material );
-
-const w_material = new THREE.MeshBasicMaterial( { color: "#00FF00",wireframe:true,transparent:true } );
-const dice01_wireframe = new THREE.Mesh( diceGeometry, w_material );
-dice01.add( dice01_wireframe );
 
 const colors = [
     "#191716",
@@ -60,15 +45,11 @@ let dices = {};
 colors.forEach((c, i) => dices[i] = new THREE.Mesh(diceGeometry, new THREE.MeshBasicMaterial( {color: c})));
 
 const cube = new THREE.Group();
-cube.add( dice01 );
 scene.add( cube );
 
 // Render Loop
 // var render = function () {
   // requestAnimationFrame( render );
-
-  // dice01.x += 0.11;
-  // dice01.y += 0.11;
 
   // Render the scene
   // renderer.render(scene, camera);
@@ -79,8 +60,6 @@ function render(){
 
   cube.rotation.x = Date.now() * 0.00005;
   cube.rotation.y = Date.now() * 0.0001;
-  // dice01.position.y += 0.0005;
-  // dice01.position.z += 0.05;
 
   renderer.render( scene, camera);
 }
