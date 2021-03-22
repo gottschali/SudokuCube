@@ -15,7 +15,6 @@ renderer.setClearColor("#2E2B40");
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const diceGeometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 const colors = [
     "#191716",
@@ -29,8 +28,9 @@ const colors = [
     "#7C7287",
 ];
 // Just use normal array
-let dices = {};
-colors.forEach((c, i) => dices[i] = new THREE.Mesh(diceGeometry, new THREE.MeshBasicMaterial( {color: c})));
+const makeDice = ( c => new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), new THREE.MeshBasicMaterial( {color: c})));
+let die = [];
+colors.forEach( c => die.push( makeDice( c ) ));
 
 const cube = new THREE.Group();
 scene.add( cube );
@@ -46,7 +46,7 @@ function render(){
 let history = [];
 
 function move_cube(x, y, z, color) {
-    const dice = dices[color - 1].clone();
+    const dice = die[color - 1].clone();
 	  history.push(dice)
     cube.add(dice);
 	  dice.position.set(x, y, z);
