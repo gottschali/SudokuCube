@@ -24,3 +24,4 @@ def human_step_by_step(sudoku_map):
             return "down"
     for i in range(len(dice_order) - 1):
         print(f"({COLOR_MAP[dice_order[i + 1][1].color]}) -> {direction(dice_order[i][0], dice_order[i + 1][0])}")
+

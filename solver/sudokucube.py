@@ -3,12 +3,17 @@ from faces import Faces
 from sequence import Sequence
 from helper import human_step_by_step
 
+import json
+js = []
 
 class SudokuCube(dict):
 
     def __init__(self):
         self.sequence = Sequence()
         self.faces = Faces()
+
+    def _update(self, coordinate, color):
+        js.append((coordinate.coords, color))
 
     def solve(self):
         solutions = 0
@@ -27,6 +32,7 @@ class SudokuCube(dict):
             # Step in: set the cube map and add the colors to the faces
             self[coordinate] = dice
             self.faces.add_dice(coordinate, dice.color)
+            self._update(coordinate, dice.color)
             # Recursively solve for every neighbor
             for neighbor in coordinate.neighbors():
                 # Test that the neigbor is not already occupied
@@ -37,6 +43,7 @@ class SudokuCube(dict):
             # Backtrack: remove the colors from the faces and reset the cube map
             self.faces.remove_dice(coordinate, dice.color)
             del self[coordinate]
+            self._update(coordinate, 0)
         # Condition for termination
         if self.sequence.done():
             # Backtrack
@@ -48,3 +55,5 @@ class SudokuCube(dict):
 
 if __name__ == "__main__":
     SudokuCube().solve()
+    with open("steps.json", "w") as f:
+        json.dump(js, f)
