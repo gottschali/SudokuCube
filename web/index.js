@@ -42,12 +42,11 @@ function render(){
   renderer.render( scene, camera);
 }
 
-
 let history = [];
 
 function move_cube(x, y, z, color) {
     const dice = die[color - 1].clone();
-	  history.push(dice)
+	  history.push(dice);
     cube.add(dice);
 	  dice.position.set(x, y, z);
     // render();
@@ -56,15 +55,8 @@ function move_cube(x, y, z, color) {
 
 
 function do_step(x, y, z, color) {
-    if (color != 0) {
-        move_cube(x, y, z, color);
-    } else {
-			// probably means remove
-// Do lookup by name instead of hist array
-			const dice = history.pop();
-			cube.remove( dice );
-        console.log("nothing");
-    }
+    if (color != 0) move_cube(x, y, z, color)
+    else cube.remove( history.pop() );
 }
 render();
 let i = 0;
