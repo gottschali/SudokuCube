@@ -1,29 +1,18 @@
 import * as THREE from './three.module.js';
-import {steps} from './steps.js'
-// import {steps} from './baby_steps.js'
+// import {steps} from './steps.js'
+import {steps} from './baby_steps.js'
 // Import the modules
 
 // Orbit Controls
 // Automatic resizing
 
-// Create an empty scene
 const scene = new THREE.Scene();
-
-// Create a basic perspective camera
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 camera.position.set(5, 5, 5);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-// Create a renderer with Antialiasing
-const renderer = new THREE.WebGLRenderer({antialias:true});
-
-// Configure renderer clear color
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setClearColor("#2E2B40");
-
-// Configure renderer size
 renderer.setSize( window.innerWidth, window.innerHeight );
-
-// Append Renderer to DOM
 document.body.appendChild( renderer.domElement );
 
 const diceGeometry = new THREE.BoxGeometry( 1, 1, 1 );
