@@ -1,4 +1,5 @@
 import * as THREE from './three.module.js';
+import * as ORBIT from './OrbitControls.js';
 // import {steps} from './steps.js'
 import {steps} from './baby_steps.js'
 // Import the modules
@@ -14,6 +15,11 @@ const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setClearColor("#2E2B40");
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
+
+const controls = new ORBIT.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.enableZoom = false;
 
 
 const colors = [
@@ -36,9 +42,6 @@ const cube = new THREE.Group();
 scene.add( cube );
 
 function render(){
-  cube.rotation.x = Date.now() * 0.00005;
-  cube.rotation.y = Date.now() * 0.0001;
-
   renderer.render( scene, camera);
 }
 
@@ -49,10 +52,8 @@ function move_cube(x, y, z, color) {
 	  history.push(dice);
     cube.add(dice);
 	  dice.position.set(x, y, z);
-    // render();
+    render();
 }
-
-
 
 function do_step(x, y, z, color) {
     if (color != 0) move_cube(x, y, z, color)
@@ -65,10 +66,11 @@ function run() {
       let [[x, y, z], color] = steps[i];
 	    do_step(x, y, z, color);
 	}
-	 render();
 	 i++;
 }
 
 window.setInterval( run, 1 );
 
+controls.addEventListener('change', render);
+window.addEventListener('resize', render);
 
