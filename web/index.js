@@ -1,10 +1,7 @@
-import * as THREE from './three.module.js';
-import * as ORBIT from './OrbitControls.js';
-// import {steps} from './steps.js'
-import {steps} from './baby_steps.js'
-// Import the modules
+import * as THREE from './node_modules/three/build/three.module.js';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+import {steps} from '../steps.js';
 
-// Orbit Controls
 // Automatic resizing
 
 const scene = new THREE.Scene();
@@ -16,7 +13,7 @@ renderer.setClearColor("#2E2B40");
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const controls = new ORBIT.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enableZoom = false;
