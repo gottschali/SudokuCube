@@ -1,14 +1,39 @@
 * Observations
-** Direction in which you do doesnt matter
-** There are 4 possible starting points
-* Analyse with colorings
-** Which can be
-*** Center cornern corner
-*** Edge Edge Edge
-*** Corner Center Center
-* Optimisation 
-** Bipartite check
-* How many solutions are there?
+** Direction
+It does not matter if you start from the "end" or the "start" of the sequence
+** Starting points
+*** Symmetry
+There are 4 distinct starting points
+- Middle (of the entire cube)
+- Center (of a face)
+- Edge
+- Corner
+*** Optimisation
+With checkboard coloring one can see that there are
+15 "white" and 14 "black" cubelets. Every step it changes color.
+Therefore it must start on a "white" which is wlog a center
 
-* How to construct a sequence for which a unquie solution exists
-** How many are there
+** Bipartite check
+If the search divides the cube in more than one free region it is impossible to coplete it.
+This can be checked with a depth first search which improves the required steps though it runs slower.
+
+* Coloring Analysis
+** Faces
+How many faces are served with a cubelet of type
+- Middle -> 0
+- Center -> 1
+- Edge -> 2
+- Corner -> 3
+** Combination of triplets
+- middle cornern corner
+- Edge Edge Edge
+- Corner Center Center
+
+* Result
+- There are 2 Solution for the canonical sequence
+
+* Further questions
+** Find a mathematical proof that does not rely on brute force
+** How to construct valid sequences
+** How many valid sequences are there
+** Can this be generalized to other cube sizes
