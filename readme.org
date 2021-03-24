@@ -1,3 +1,5 @@
+[[./screen.png]]
+
 * Observations
 ** Direction
 It does not matter if you start from the "end" or the "start" of the sequence
