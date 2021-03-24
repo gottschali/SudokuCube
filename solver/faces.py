@@ -1,6 +1,5 @@
 from coordinate import Coordinate, options
 
-
 class Faces(dict):
     """
     For every of the six faces of a cube a set is kept with all colors that are part of the site.
