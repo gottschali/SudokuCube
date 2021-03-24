@@ -1,4 +1,10 @@
-from constant import Color
+from enum import IntEnum
+
+colors = ("cyan", "green", "yellow",
+          "pink", "blue", "black",
+          "red", "brown", "grey")
+
+Color = IntEnum("Color", colors)
 
 class Seq(tuple):
 

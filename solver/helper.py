@@ -4,8 +4,8 @@ starting_points = {0: "middle",
                    3: "corner"}
 
 dirs = {"x": ["left", "right"],
-              "y": ["front", "back"],
-              "z": ["up", "down"]
+        "y": ["front", "back"],
+        "z": ["up", "down"]
         }
 
 def human(partial):
@@ -13,7 +13,6 @@ def human(partial):
     dice_order = sorted(partial.items(), key=lambda i: i[1][1]) # Sort by index
     print(f"starting point: {starting_points[sum(map(abs, dice_order[0][0]))]}")
     def direction(ca, cb):
-        
         for d, a, b in zip(("x", "y", "z"), ca, cb):
             if (a > b) or (b > a):
                 return dirs[d][a > b]
