@@ -1,31 +1,26 @@
-from typing import Iterable
+from enum import IntEnum
 
-from constant import *
+colors = ("cyan", "green", "yellow",
+          "pink", "blue", "black",
+          "red", "brown", "grey")
 
+Color = IntEnum("Color", colors)
 
-class Sequence(list):
-    """ Represents a SudokuCube sequence """
+class Seq(tuple):
 
-    def __init__(self, color_sequence : Iterable[Dice] = ORIGINAL_COLORS):
-        """ Accepts an optional color_sequence """
-        self._index = -1
-        self.extend(color_sequence)
+    def __init__(self, iterable=(), /):
+        self = tuple(iterable)
+        if not len(self)**(1/3).is_integer():
+            raise ValueError("Length of sequence must be a power of three")
 
-    def _front(self) -> Dice:
-        """ Returns the current dice """
-        return self[self._index]
-
-    def push(self) -> Dice:
-        """ Move one dice forward in the sequence and return the new current """
-        self._index += 1
-        return self._front()
-
-    def pop(self) -> Dice:
-        """ Move one dice backwards in the sequence and return the new current """
-        self._index -= 1
-        return self._front()
-
-    def done(self) -> bool:
-        """ The current dice is the last of the sequence """
-        return self._index == len(self) - 1
-
+OG = Seq(getattr(Color, color) for color in (
+        "cyan", "green", "yellow",
+        "pink", "blue", "black",
+        "red", "green", "cyan",
+        "blue", "black", "brown",
+        "grey", "yellow", "red",
+        "cyan", "blue", "brown",
+        "black", "red", "grey",
+        "brown", "pink", "green",
+        "yellow", "grey", "pink"
+    ))

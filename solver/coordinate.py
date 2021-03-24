@@ -1,35 +1,19 @@
-from typing import Generator
+from collections import namedtuple
+import itertools as it
 
-class Coordinate:
-    """ 3-dimensional coordinate for a 3x3x3 cube raning from -1 to 1 """
+Coordinate = namedtuple("Coordinate", ["x", "y", "z"])
 
-    def __init__(self, x : int, y : int, z : int):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.coords = (x, y, z)
+# Differences to a neighbor
+deltas = ((1, 0, 0), (-1, 0, 0), (0, 1, 0),
+          (0, -1, 0), (0, 0, 1), (0, 0, -1))
 
-    def __eq__(self, other : "Coordinate") -> bool:
-        return self.coords == other.coords
+# Every coordinate in a 3x3x3 cube
+options = tuple(Coordinate(x, y, z) for x, y, z in it.product(range(-1, 2), range(-1, 2), range(-1, 2)))
 
-    def __repr__(self) -> str:
-        return f"Coordinate({self.x}, {self.y}, {self.z})"
-
-    def __hash__(self):
-        return hash(self.coords)
-
-    def _check_in_bounds(self) -> bool:
-        """ Check wether the coordinates are within the predefined range [-1, 1] """
-        return all(abs(c) <= 1 for c in self.coords)
-
-    def neighbors(self) -> Generator["Coordinate", None, None]:
-        """
-        Returns a generator that yields all neigboring coordinates(hare a face)
-        and are within bounds.
-        """
-        deltas = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
-        for dx, dy, dz in deltas:
-            new_coordinate = Coordinate(self.x + dx, self.y + dy, self.z + dz)
-            if new_coordinate._check_in_bounds():
-                yield new_coordinate
-
+# Abstract to other sizes           
+def neighbors(coordinate):
+    x, y, z = coordinate
+    for dx, dy, dz in deltas:
+        new = Coordinate(x + dx, y + dy, z + dz)
+        if all(abs(c) <= 1 for c in new): # Check in bounds
+            yield new
