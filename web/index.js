@@ -75,8 +75,20 @@ function run() {
 	 i++;
 }
 
-window.setInterval( run, 1 );
+
+window.interval = null;
+function toggle() {
+   if (window.interval == null) {
+      window.interval = window.setInterval( run, 1 );
+	 } else {
+			window.clearInterval(window.interval);
+      window.interval = null;
+	}
+}
 
 controls.addEventListener('change', render);
+toggle();
 window.addEventListener('resize', render);
+
+window.addEventListener('click', toggle);
 
