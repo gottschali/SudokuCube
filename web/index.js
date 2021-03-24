@@ -53,12 +53,21 @@ function move_cube(x, y, z, color) {
 }
 
 function do_step(x, y, z, color) {
-    if (color != 0) move_cube(x, y, z, color)
-    else cube.remove( history.pop() );
+    if (color != 0) {
+			move_cube(x, y, z, color);
+			window.depth++;
+		} else {
+			cube.remove( history.pop() );
+			window.depth--;
+		}
 }
 render();
 let i = 0;
+window.depth = 0;
 function run() {
+	 if (window.depth == 26) {
+		 window.clearInterval( window.interval );
+	 }
 	 if (i < steps.length)  {
       let [[x, y, z], color] = steps[i];
 	    do_step(x, y, z, color);
